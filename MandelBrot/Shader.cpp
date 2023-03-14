@@ -3,27 +3,27 @@
 Shader::Shader()
 {
 	shaderId = 0;
-	//uniformModel = 0;
-	//uniformProjection = 0;
+	// uniformModel = 0;
+	// uniformProjection = 0;
 }
 
-void Shader::CreateFromString(const char* vertexCode, const char* fragmentCode)
+void Shader::CreateFromString(const char *vertexCode, const char *fragmentCode)
 {
 	CompileShader(vertexCode, fragmentCode);
 }
 
-void Shader::CreateFromFiles(const char* vertexLocation, const char* fragmentLocation)
+void Shader::CreateFromFiles(const char *vertexLocation, const char *fragmentLocation)
 {
 	std::string vertexString = ReadFile(vertexLocation);
 	std::string fragmentString = ReadFile(fragmentLocation);
 
-	const char* vertexCode = vertexString.c_str();
-	const char* fragmentCode = fragmentString.c_str();
+	const char *vertexCode = vertexString.c_str();
+	const char *fragmentCode = fragmentString.c_str();
 
 	CompileShader(vertexCode, fragmentCode);
 }
 
-std::string Shader::ReadFile(const char* fileLocation)
+std::string Shader::ReadFile(const char *fileLocation)
 {
 	std::string content;
 	std::fstream fileStream(fileLocation, std::ios::in);
@@ -44,20 +44,18 @@ std::string Shader::ReadFile(const char* fileLocation)
 	fileStream.close();
 
 	return content;
-
 }
 
 GLuint Shader::GetProjectionLocation()
 {
-	//return uniformProjection;
+	// return uniformProjection;
 	return 0;
 }
 
 GLuint Shader::GetModelLocation()
 {
-	//return uniformModel;
+	// return uniformModel;
 	return 0;
-
 }
 
 void Shader::UseShader()
@@ -72,8 +70,8 @@ void Shader::ClearShader()
 		glDeleteProgram(shaderId);
 		shaderId = 0;
 	}
-	//uniformModel = 0;
-	//uniformProjection = 0;
+	// uniformModel = 0;
+	// uniformProjection = 0;
 }
 
 Shader::~Shader()
@@ -81,7 +79,7 @@ Shader::~Shader()
 	ClearShader();
 }
 
-void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
+void Shader::CompileShader(const char *vertexCode, const char *fragmentCode)
 {
 	shaderId = glCreateProgram();
 	if (!shaderId)
@@ -95,7 +93,7 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 
 	GLint result = 0;
 
-	GLchar errorLog[1024] = { 0 };
+	GLchar errorLog[1024] = {0};
 
 	glLinkProgram(shaderId);
 	glGetProgramiv(shaderId, GL_LINK_STATUS, &result);
@@ -118,15 +116,15 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 	}
 
 	glValidateProgram(shaderId);
-	//uniformModel = glGetUniformLocation(shaderId, "model");
-	//uniformProjection = glGetUniformLocation(shaderId, "projection");
+	// uniformModel = glGetUniformLocation(shaderId, "model");
+	// uniformProjection = glGetUniformLocation(shaderId, "projection");
 }
 
-void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
+void Shader::AddShader(GLuint theProgram, const char *shaderCode, GLenum shaderType)
 {
 	GLuint theShader = glCreateShader(shaderType);
 
-	const GLchar* theCode[1];
+	const GLchar *theCode[1];
 	theCode[0] = shaderCode;
 
 	GLint codeLength[1];
@@ -137,7 +135,7 @@ void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderT
 
 	GLint result = 0;
 
-	GLchar errorLog[1024] = { 0 };
+	GLchar errorLog[1024] = {0};
 
 	glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
 	if (!result)
