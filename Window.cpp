@@ -1,5 +1,21 @@
 #include "Window.h"
 
+double Window::MouseXPos = 0.0f;
+double Window::MouseYPos = 0.0f;
+
+double Window::xMin = -2.0f;
+double Window::xMax = 2.0f;
+double Window::yMin = -2.0f;
+double Window::yMax = 2.0f;
+
+float Window::changeRate = 0.1f;
+
+GLint Window::height = 0;
+GLint Window::width = 0;
+
+bool Window::leftPressed = false;
+
+
 Window::Window()
 {
 	width = 800;
@@ -7,6 +23,7 @@ Window::Window()
 	bufferHeight = 0;
 	bufferWidth = 0;
 	mainWindow = nullptr;
+
 }
 
 Window::Window(GLint windowWidth, GLint windowHeight)
@@ -52,6 +69,9 @@ int Window::Intialise()
 
 	glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);
 
+	//Handle input
+	CreateCallbacks();
+
 	// Set the context for GLEW to use
 	// everything must be draw in this window
 	glfwMakeContextCurrent(mainWindow);
@@ -80,3 +100,61 @@ Window::~Window()
 	glfwDestroyWindow(mainWindow);
 	glfwTerminate();
 }
+
+void Window::CreateCallbacks()
+{
+	glfwSetScrollCallback(mainWindow, ZoomCallback);
+	glfwSetMouseButtonCallback(mainWindow, DragCallback);
+	glfwSetCursorPosCallback(mainWindow, CursorCallback);
+}
+
+void Window::ZoomCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	// Mouse represents the new center
+	glfwGetCursorPos(window, &MouseXPos, &MouseYPos);
+	
+	if (yoffset > 0)
+	{
+		xMin += changeRate;
+		xMax -= changeRate;
+		yMin += changeRate;
+		yMax -= changeRate;
+	}
+	if (yoffset < 0)
+	{
+		xMin -= changeRate;
+		xMax += changeRate;
+		yMin -= changeRate;
+		yMax += changeRate;
+	}
+
+}
+
+void Window::DragCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		leftPressed = true;
+		printf("Press\n");
+	}
+
+	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+	{
+		leftPressed = false;
+		printf("Soltou\n");
+	}
+}
+
+void Window::CursorCallback(GLFWwindow* window, double xPos, double yPos)
+{
+	if (leftPressed)
+	{
+		double myX = (xPos / width - 0.5) * (xMax - xMin);
+		double myY = (1 - yPos / height - 0.5) * (yMax - yMin);
+
+		
+		printf("%f, %f\n", myX, myY);
+	}
+}
+
+

@@ -5,6 +5,8 @@
 class Window
 {
 public:
+	static double xMin, xMax, yMin, yMax;
+	static double MouseXPos, MouseYPos;
 	Window();
 	Window(GLint windowWidth, GLint windowHeight);
 
@@ -15,14 +17,23 @@ public:
 
 	void SwapBuffers() { glfwSwapBuffers(mainWindow); }
 
+
 	int Intialise();
 	~Window();
 
 private:
 	GLFWwindow* mainWindow;
+	static float changeRate;
 
-	GLint width, height;
+	static GLint width, height;
 	GLint bufferWidth, bufferHeight;
+
+	static bool leftPressed;
+
+	void CreateCallbacks();
+	static void ZoomCallback(GLFWwindow* window, double xoffset, double yoffset);
+	static void DragCallback(GLFWwindow* window, int button, int action, int mods);
+	static void CursorCallback(GLFWwindow* window, double xPos, double yPos);
 
 };
 

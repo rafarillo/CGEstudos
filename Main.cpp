@@ -61,7 +61,7 @@ void CreateObject()
 int main()
 {
 	
-	mainWindow = Window(800, 600);
+	mainWindow = Window(800, 800);
 	mainWindow.Intialise();
 
 	CreateObject();
@@ -75,6 +75,7 @@ int main()
 		// Get + Handle user input events
 		glfwPollEvents();
 
+
 		// clear window
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -86,10 +87,10 @@ int main()
 		yMin = shaderList[0].GetYMin();
 		yMax = shaderList[0].GetYMax();
 
-		glUniform1f(xMin, -2.0f);
-		glUniform1f(xMax, 2.0f);
-		glUniform1f(yMin, -2.0f);
-		glUniform1f(yMax, 2.0f);
+		glUniform1f(xMin, mainWindow.xMin);
+		glUniform1f(xMax, mainWindow.xMax);
+		glUniform1f(yMin, mainWindow.yMin);
+		glUniform1f(yMax, mainWindow.yMax);
 
 		meshList[0]->RenderMesh();
 

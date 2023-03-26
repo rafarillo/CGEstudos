@@ -1,4 +1,5 @@
 #version 330
+precision highp float;
 
 in Data{
 	float xMin;
@@ -10,7 +11,7 @@ in Data{
 
 out vec4 colour;
 
-#define MAXIter 700
+#define MAXIter 500
 #define product(a, b) vec2(a.x*b.x - a.y*b.y, a.x*b.y + a.y*b.x)
 
 
@@ -24,7 +25,7 @@ int numberOfIterations()
 	int iteration = 0;
 	vec2 value = vec2(0.0, 0.0);
 
-	vec2 pos = 2*vec2(gl_FragCoord.x/800 - 0.5 - (DataIn.xMax - DataIn.xMin), gl_FragCoord.y/800 - 0.5 - (DataIn.yMax - DataIn.yMin));
+	vec2 pos = vec2(gl_FragCoord.x * (DataIn.xMax - DataIn.xMin)/800 + DataIn.xMin, gl_FragCoord.y * (DataIn.yMax - DataIn.yMin)/800 + DataIn.yMin);
 
 	
 	while(length(fc(value, pos.xy)) <= 4.0 && iteration < MAXIter)
@@ -38,7 +39,8 @@ int numberOfIterations()
 vec4 color()
 {
 	int nIter = numberOfIterations();
-	return vec4(nIter/MAXIter, nIter/MAXIter, nIter/MAXIter, 1.0);
+	if(nIter == MAXIter) nIter = 0;
+	return vec4(0, float(nIter)/float(MAXIter), 0, 1.0);
 }
 
 
