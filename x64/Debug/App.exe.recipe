@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Udemy\Computer Graphics with Modern OpenGL and C++\MandelBrot\x64\Debug\App.exe</FullPath>
+      <FullPath>D:\Udemy\Computer Graphics with Modern OpenGL and C++\Mandelbrot\MandelBrot\x64\Debug\App.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
