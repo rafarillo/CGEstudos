@@ -1,1 +1,0 @@
-D:\Udemy\Computer Graphics with Modern OpenGL and C++\App\x64\Debug\App.exe
