@@ -58,6 +58,26 @@ GLuint Shader::GetModelLocation()
 	return 0;
 }
 
+GLuint Shader::GetXMin()
+{
+	return xMin;
+}
+
+GLuint Shader::GetXMax()
+{
+	return xMax;
+}
+
+GLuint Shader::GetYMin()
+{
+	return yMin;
+}
+
+GLuint Shader::GetYMax()
+{
+	return yMax;
+}
+
 void Shader::UseShader()
 {
 	glUseProgram(shaderId);
@@ -116,6 +136,11 @@ void Shader::CompileShader(const char *vertexCode, const char *fragmentCode)
 	}
 
 	glValidateProgram(shaderId);
+	xMin = glGetUniformLocation(shaderId, "xMin");
+	xMax = glGetUniformLocation(shaderId, "xMax");
+	yMin = glGetUniformLocation(shaderId, "yMin");
+	yMax = glGetUniformLocation(shaderId, "yMax");
+
 	// uniformModel = glGetUniformLocation(shaderId, "model");
 	// uniformProjection = glGetUniformLocation(shaderId, "projection");
 }

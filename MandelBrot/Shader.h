@@ -18,13 +18,18 @@ class Shader
 		
 		GLuint GetProjectionLocation();
 		GLuint GetModelLocation();
+		GLuint GetXMin();
+		GLuint GetXMax();
+		GLuint GetYMin();
+		GLuint GetYMax();
+		
 
 		void UseShader();
 		void ClearShader();
 
 		~Shader();
 private:
-	GLuint shaderId;// , uniformProjection, uniformModel;
+	GLuint shaderId, xMin, xMax, yMin, yMax;// , uniformProjection, uniformModel;
 	
 	void CompileShader(const char* vertexCode, const char* fragmentCode);
 	void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);

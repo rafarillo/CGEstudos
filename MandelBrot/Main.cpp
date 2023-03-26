@@ -67,9 +67,9 @@ int main()
 	CreateObject();
 	CreateShaders();
 
-	GLuint uniformProjection = 0, uniformModel = 0;
+	GLuint xMin, xMax, yMin, yMax;
 	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
-
+	xMin = xMax = yMin = yMax = 0;
 	while (!mainWindow.getShouldClose())
 	{
 		// Get + Handle user input events
@@ -80,6 +80,16 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shaderList[0].UseShader();
+		
+		xMin = shaderList[0].GetXMin();
+		xMax = shaderList[0].GetXMax();
+		yMin = shaderList[0].GetYMin();
+		yMax = shaderList[0].GetYMax();
+
+		glUniform1f(xMin, -2.0f);
+		glUniform1f(xMax, 2.0f);
+		glUniform1f(yMin, -2.0f);
+		glUniform1f(yMax, 2.0f);
 
 		meshList[0]->RenderMesh();
 
