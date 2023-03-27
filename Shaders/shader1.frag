@@ -27,7 +27,6 @@ int numberOfIterations()
 
 	vec2 pos = vec2(gl_FragCoord.x * (DataIn.xMax - DataIn.xMin)/800 + DataIn.xMin, gl_FragCoord.y * (DataIn.yMax - DataIn.yMin)/800 + DataIn.yMin);
 
-	
 	while(length(fc(value, pos.xy)) <= 4.0 && iteration < MAXIter)
 	{
 		value = fc(value, pos.xy);

@@ -90,8 +90,6 @@ void Shader::ClearShader()
 		glDeleteProgram(shaderId);
 		shaderId = 0;
 	}
-	// uniformModel = 0;
-	// uniformProjection = 0;
 }
 
 Shader::~Shader()
@@ -126,7 +124,7 @@ void Shader::CompileShader(const char *vertexCode, const char *fragmentCode)
 
 	glValidateProgram(shaderId);
 
-	glLinkProgram(shaderId);
+	// glLinkProgram(shaderId); Check later if in windows still working
 	glGetProgramiv(shaderId, GL_VALIDATE_STATUS, &result);
 	if (!result)
 	{
