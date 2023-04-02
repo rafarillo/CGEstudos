@@ -8,12 +8,17 @@ double Window::xMax = 2.0f;
 double Window::yMin = -2.0f;
 double Window::yMax = 2.0f;
 
-float Window::changeRate = 0.1f;
+float Window::changeRate = 1.1f;
 
 GLint Window::height = 0;
 GLint Window::width = 0;
 
+GLfloat Window::lastX = 0.0f;
+GLfloat Window::lastY = 0.0f;
+
+
 bool Window::leftPressed = false;
+bool Window::deslocating = false;
 
 
 Window::Window()
@@ -111,23 +116,23 @@ void Window::CreateCallbacks()
 void Window::ZoomCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	// Mouse represents the new center
-	glfwGetCursorPos(window, &MouseXPos, &MouseYPos);
-	
+
 	if (yoffset > 0)
 	{
-		xMin += changeRate;
-		xMax -= changeRate;
-		yMin += changeRate;
-		yMax -= changeRate;
+		xMin *= changeRate;
+		xMax *= changeRate;
+		yMin *= changeRate;
+		yMax *= changeRate;
 	}
 	if (yoffset < 0)
 	{
-		xMin -= changeRate;
-		xMax += changeRate;
-		yMin -= changeRate;
-		yMax += changeRate;
+		xMin *= 1.0/changeRate;
+		xMax *= 1.0/changeRate;
+		yMin *= 1.0/changeRate;
+		yMax *= 1.0/changeRate;
 	}
 
+	printf("xMin = %f xMax = %f | yMin = %f yMax = %f\n", xMin, xMax, yMin, yMax);
 }
 
 void Window::DragCallback(GLFWwindow* window, int button, int action, int mods)
@@ -141,6 +146,7 @@ void Window::DragCallback(GLFWwindow* window, int button, int action, int mods)
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 	{
 		leftPressed = false;
+		deslocating = false;
 		printf("Soltou\n");
 	}
 }
@@ -151,6 +157,20 @@ void Window::CursorCallback(GLFWwindow* window, double xPos, double yPos)
 	{
 		double myX = (xPos / width - 0.5) * (xMax - xMin);
 		double myY = (1 - yPos / height - 0.5) * (yMax - yMin);
+		
+		if(!deslocating)
+		{
+			lastX = myX;
+			lastY = myY;
+		}
+		
+		deslocating = true;
+
+		xMin += (myX - lastX);
+		xMax += (myX - lastX);
+
+		yMin += (myY - lastY);
+		yMax += (myY - lastY);
 
 		
 		printf("%f, %f\n", myX, myY);

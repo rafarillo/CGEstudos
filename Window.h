@@ -26,9 +26,11 @@ private:
 	static float changeRate;
 
 	static GLint width, height;
+	static GLfloat lastX, lastY;
+
 	GLint bufferWidth, bufferHeight;
 
-	static bool leftPressed;
+	static bool leftPressed, deslocating;
 
 	void CreateCallbacks();
 	static void ZoomCallback(GLFWwindow* window, double xoffset, double yoffset);
